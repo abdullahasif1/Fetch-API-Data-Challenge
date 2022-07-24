@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Bar from "./Bar";
-import List from "./List";
+import Table from "./List";
+
 
 function App() {
   
@@ -30,7 +31,7 @@ function App() {
     <div className="App">
       <Bar reqCat={reqCat} setReqCat={setReqCat} />
         {fetchError && <p className="w-100" style={{ color: "red", marginTop: "90px", textAlign: "center" }}>{`Error : ${fetchError}`}</p>}
-        {!fetchError && <List items={items} />}
+        {!fetchError && <Table items={items} />}
     </div>
   );
 }

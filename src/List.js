@@ -1,18 +1,27 @@
 import React from 'react'
 
 
-const List = ({ items }) => {
+const Table = ({ items }) => {
   return (
-    <ul style={{marginTop: '80px'}}>
-      {items.map(item => (
-        <li key={item.id} >
-          {JSON.stringify(item)}
-        </li>
-      ))}
-    </ul>
+    <div className='table-container' style={{ marginTop: '80px' }}>
+      <table>
+        <tbody>
+          {items.map(item => (
+            <tr key={item.id}>
+              {Object.entries(item).map(([key, value]) => {
+                return (
+                  <td key={key}>
+                    {JSON.stringify(value)}
+                  </td>)
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
 
-    
+
   )
 }
 
-export default List
+export default Table
