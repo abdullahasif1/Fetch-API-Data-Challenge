@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import Bar from "./Bar";
+import List from "./List";
 
 function App() {
+  
+  //const url = 'https://jsonplaceholder.typicode.com/'
+  const [reqCat, setReqCat] = useState('users');
+  const [items, setItems] = useState([]);
+  const [fetchError, setFetchError] = useState(null);
+  
+
+  useEffect(() => {
+    const fetchJson = async () =>{
+      try {
+        const response = await fetch(`https://jsonplaceholder.typicode.com/${reqCat}`)
+        if (!response.ok) throw Error('Did not recieve expected data');
+        const converted = await response.json();
+        setItems(converted);
+        setFetchError(null)
+      } catch (err) {
+        setFetchError(err.message);
+      }
+    } 
+    fetchJson();
+
+  }, [reqCat])
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Bar reqCat={reqCat} setReqCat={setReqCat} />
+        {fetchError && <p className="w-100" style={{ color: "red", marginTop: "90px", textAlign: "center" }}>{`Error : ${fetchError}`}</p>}
+        {!fetchError && <List items={items} />}
     </div>
   );
 }
